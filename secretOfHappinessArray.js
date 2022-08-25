@@ -25,12 +25,13 @@ const server = http.createServer((req, res) => {
     let splitReq = req.url.split("/");
     let endUrl = splitReq[splitReq.length - 1];
     let idNo = Number(endUrl);
+    let data;
     if (req.method == "POST" && endUrl == "create") {
         req.on("data", (chunk) => {
-            let data = chunk.toString();
-            const dataInserted = createRow(data);
+            data = chunk.toString();
         });
         req.on("end", () => {
+            createRow(data);
             res.write("Data Updated Successfully");
             res.end();
         });
@@ -50,7 +51,9 @@ const server = http.createServer((req, res) => {
         })();
     }
 });
-server.listen(process.env.PORT || 5000, () => {
+server.listen(process.env.PORT || 5555, () => {
     const port = server.address().port;
     console.log(`connected to port: ${port}`);
 });
+
+console.log("check");
