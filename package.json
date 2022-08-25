@@ -1,23 +1,23 @@
 {
-  "name": "deployarray",
-  "version": "1.0.0",
-  "description": "",
-  "main": "secretOfHappinessArray.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start":"node secretOfHappinessArray.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/haridev1999/arrayDatabase-SOH.git"
-  },
-  "author": "Haridev",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/haridev1999/arrayDatabase-SOH/issues"
-  },
-  "engines": {
-		  "node":"v18.2.0"
-  },
-  "homepage": "https://github.com/haridev1999/arrayDatabase-SOH#readme"
+    "name": "deployarray",
+    "version": "1.0.0",
+    "description": "",
+    "main": "secretOfHappinessArray.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node secretOfHappinessArray.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/haridev1999/arrayDatabase-SOH.git"
+    },
+    "author": "Haridev",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/haridev1999/arrayDatabase-SOH/issues"
+    },
+    "engines": {
+        "node": "v18.7.0"
+    },
+    "homepage": "https://github.com/haridev1999/arrayDatabase-SOH#readme"
 }
