@@ -1,63 +1,56 @@
-const http = require ('http');
+const http = require("http");
 
-let database=[];
-let slNo=1;
+let database = [];
+let slNo = 1;
 
-async function createRow(jsonDataRow)
-{
-		dataRow = JSON.parse(jsonDataRow);
-	    dataRow.slNo = slNo++;
-		dataRow.date = new Date();
-		database.push(dataRow);
+async function createRow(jsonDataRow) {
+    dataRow = JSON.parse(jsonDataRow);
+    dataRow.slNo = slNo++;
+    dataRow.date = new Date();
+    database.push(dataRow);
 }
 
-async function focusAreas()
-{
-		let focusAreas = [];
-		let lastEntry = database[database.length-1];
-		let areas = Object.keys(lastEntry);
-		let values = Object.values(lastEntry);
-		for(i=0;i<areas.length-2;i++)
-		{
-				if(values[i] <= 3)
-						focusAreas.push(areas[i]);
-		}
-		return focusAreas;
+async function focusAreas() {
+    let focusAreas = [];
+    let lastEntry = database[database.length - 1];
+    let areas = Object.keys(lastEntry);
+    let values = Object.values(lastEntry);
+    for (i = 0; i < areas.length - 2; i++) {
+        if (values[i] <= 3) focusAreas.push(areas[i]);
+    }
+    return focusAreas;
 }
 
-const server = http.createServer((req,res) => {
-      	let splitReq=req.url.split('/')
-        let endUrl= splitReq[splitReq.length-1];
-        let idNo=Number(endUrl);
-		if(req.method == 'POST' && endUrl == 'create')
-		{
-				req.on('data',chunk => {
-						let data =chunk.toString();
-						const dataInserted = createRow(data);
-				});
-				req.on('end',() => {
-						res.write('Data Updated Successfully');
-						res.end();
-				});
-		}
-		if(req.method == 'GET' && endUrl == 'all') 
-		{
-				let printArray = JSON.stringify(database);
-				res.write(printArray);
-				res.end();
-		}
-		if(req.method == 'GET' && endUrl == 'focus')
-		{
-				(async () => {
-						const areasToFocus = await focusAreas();
-						const printAreasToFocus = JSON.stringify(areasToFocus);
-						if(areasToFocus.length == 0)
-								res.write('You have no areas to focus');
-						else 
-								res.write(printAreasToFocus);
-						res.end();
-				})();
-		}
+const server = http.createServer((req, res) => {
+    let splitReq = req.url.split("/");
+    let endUrl = splitReq[splitReq.length - 1];
+    let idNo = Number(endUrl);
+    if (req.method == "POST" && endUrl == "create") {
+        req.on("data", (chunk) => {
+            let data = chunk.toString();
+            const dataInserted = createRow(data);
+        });
+        req.on("end", () => {
+            res.write("Data Updated Successfully");
+            res.end();
+        });
+    }
+    if (req.method == "GET" && endUrl == "all") {
+        let printArray = JSON.stringify(database);
+        res.write(printArray);
+        res.end();
+    }
+    if (req.method == "GET" && endUrl == "focus") {
+        (async() => {
+            const areasToFocus = await focusAreas();
+            const printAreasToFocus = JSON.stringify(areasToFocus);
+            if (areasToFocus.length == 0) res.write("You have no areas to focus");
+            else res.write(printAreasToFocus);
+            res.end();
+        })();
+    }
 });
-server.listen (8080);
-console.log('The server is running on http://localhost:8080/');
+server.listen(process.env.PORT || 5000, () => {
+    const port = server.address().port;
+    console.log(`connected to port: ${port}`);
+});
