@@ -29,6 +29,7 @@ const server = http.createServer((req, res) => {
     };
 
     if (req.method === "OPTIONS") {
+        console.log("preflight-reached")
         res.writeHead(204, headers);
         res.end();
         return;
