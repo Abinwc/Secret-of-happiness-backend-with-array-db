@@ -22,6 +22,18 @@ async function focusAreas() {
 }
 
 const server = http.createServer((req, res) => {
+    const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+        "Access-Control-Max-Age": 2592000,
+    };
+
+    if (req.method === "OPTIONS") {
+        res.writeHead(204, headers);
+        res.end();
+        return;
+    }
+
     let splitReq = req.url.split("/");
     let endUrl = splitReq[splitReq.length - 1];
     let idNo = Number(endUrl);
